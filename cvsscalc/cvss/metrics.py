@@ -47,9 +47,10 @@ class Scope(Metric):
 
 
 class CIA(Metric):
+    NOT_DEFINED = Decimal(1.)
     NONE = Decimal(0.)
-    HIGH = Decimal(0.56)
     LOW = Decimal(0.22)
+    HIGH = Decimal(0.56)
 
 
 class ExploitCodeMaturity(Metric):
