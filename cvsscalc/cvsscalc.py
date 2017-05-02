@@ -98,48 +98,49 @@ class CVSSCalc(QMainWindow, Ui_MainWindow):
             lambda: self.update_score('A', CIA(CIA.HIGH)))
 
         # Temporal score buttons event handlers
-        # self.exPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'E', ExploitCodeMaturity(ExploitCodeMaturity.NOT_DEFINED)))
-        # self.euPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'E', ExploitCodeMaturity(ExploitCodeMaturity.UNPROVEN)))
-        # self.epPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'E', ExploitCodeMaturity(ExploitCodeMaturity.PROOF_OF_CONCEPT)))
-        # self.efPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'E', ExploitCodeMaturity(ExploitCodeMaturity.FUNCTIONAL)))
-        # self.ehPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'E', ExploitCodeMaturity(ExploitCodeMaturity.HIGH)))
-        # self.rlxPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'RL', RemediationLevel(RemediationLevel.NOT_DEFINED)))
-        # self.rloPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'RL', RemediationLevel(RemediationLevel.OFFICIAL_FIX)))
-        # self.rltPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'RL', RemediationLevel(RemediationLevel.TEMPORARY_FIX)))
-        # self.rlwPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'RL', RemediationLevel(RemediationLevel.WORKAROUND)))
-        # self.rluPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'RL', RemediationLevel(RemediationLevel.UNAVAILABLE)))
-        # self.rcxPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'RC', ReportConfidence(ReportConfidence.NOT_DEFINED)))
-        # self.rcuPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'RC', ReportConfidence(ReportConfidence.UNKNOWN)))
-        # self.rcrPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'RC', ReportConfidence(ReportConfidence.REASONABLE)))
-        # self.rccPushButton.clicked.connect(
-        #     lambda: self.update_score(
-        #         'RC', ReportConfidence(ReportConfidence.CONFIRMED)))
+        self.exPushButton.clicked.connect(
+            lambda: self.update_score(
+                'E', ExploitCodeMaturity(ExploitCodeMaturity.NOT_DEFINED)))
+        self.euPushButton.clicked.connect(
+            lambda: self.update_score(
+                'E', ExploitCodeMaturity(ExploitCodeMaturity.UNPROVEN)))
+        self.epPushButton.clicked.connect(
+            lambda: self.update_score(
+                'E', ExploitCodeMaturity(ExploitCodeMaturity.PROOF_OF_CONCEPT)))
+        self.efPushButton.clicked.connect(
+            lambda: self.update_score(
+                'E', ExploitCodeMaturity(ExploitCodeMaturity.FUNCTIONAL)))
+        self.ehPushButton.clicked.connect(
+            lambda: self.update_score(
+                'E', ExploitCodeMaturity(ExploitCodeMaturity.HIGH)))
+
+        self.rlxPushButton.clicked.connect(
+            lambda: self.update_score(
+                'RL', RemediationLevel(RemediationLevel.NOT_DEFINED)))
+        self.rloPushButton.clicked.connect(
+            lambda: self.update_score(
+                'RL', RemediationLevel(RemediationLevel.OFFICIAL_FIX)))
+        self.rltPushButton.clicked.connect(
+            lambda: self.update_score(
+                'RL', RemediationLevel(RemediationLevel.TEMPORARY_FIX)))
+        self.rlwPushButton.clicked.connect(
+            lambda: self.update_score(
+                'RL', RemediationLevel(RemediationLevel.WORKAROUND)))
+        self.rluPushButton.clicked.connect(
+            lambda: self.update_score(
+                'RL', RemediationLevel(RemediationLevel.UNAVAILABLE)))
+        self.rcxPushButton.clicked.connect(
+            lambda: self.update_score(
+                'RC', ReportConfidence(ReportConfidence.NOT_DEFINED)))
+        self.rcuPushButton.clicked.connect(
+            lambda: self.update_score(
+                'RC', ReportConfidence(ReportConfidence.UNKNOWN)))
+        self.rcrPushButton.clicked.connect(
+            lambda: self.update_score(
+                'RC', ReportConfidence(ReportConfidence.REASONABLE)))
+        self.rccPushButton.clicked.connect(
+            lambda: self.update_score(
+                'RC', ReportConfidence(ReportConfidence.CONFIRMED)))
 
     def _update_bs(self):
         if self.base_score is not None:
