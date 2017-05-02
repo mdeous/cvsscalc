@@ -47,7 +47,7 @@ def environmental_score(scope: Scope, miss: Decimal, mess: Decimal,
 
 
 def modified_impact_subscore(scope: Scope, mc: CIA, mi: CIA, ma: CIA,
-                             cr: CIARequirements,    ir: CIARequirements,
+                             cr: CIARequirements, ir: CIARequirements,
                              ar: CIARequirements):
     one = Decimal(1.)
     isc_mod = min(
