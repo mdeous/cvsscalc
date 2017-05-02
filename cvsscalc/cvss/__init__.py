@@ -2,6 +2,27 @@
 from decimal import ROUND_UP
 from .metrics import *
 
+CRIT_COLORS = {
+    'none': ('#ffffff', '#000000'),
+    'low': ('#ffff00', '#000000'),
+    'medium': ('#ffa500', '#000000'),
+    'high': ('#ff0000', '#000000'),
+    'critical': ('#8b0000', '#ffffff')
+}
+
+
+def criticity(score: Decimal):
+    if Decimal(0.1) <= score <= Decimal(3.9):
+        return 'low', CRIT_COLORS['low']
+    elif Decimal(4.) <= score <= Decimal(6.9):
+        return 'medium', CRIT_COLORS['medium']
+    elif Decimal(7.) <= score <= Decimal(8.9):
+        return 'high', CRIT_COLORS['high']
+    elif Decimal(9.) <= score <= Decimal(10.):
+        return 'critical', CRIT_COLORS['critical']
+    else:  # score == 0
+        return 'none', CRIT_COLORS['none']
+
 
 def roundup(d: Decimal):
     return d.quantize(Decimal('1.0'), rounding=ROUND_UP)
