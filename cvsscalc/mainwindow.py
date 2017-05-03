@@ -907,7 +907,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "CVSS Calculator"))
-        self.baseScoreLabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">MISSING METRICS</span></p></body></html>"))
+        self.baseScoreLabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"right\"><span style=\" font-weight:600;\">MISSING METRICS</span></p></body></html>"))
         self.avGroupBox.setTitle(_translate("MainWindow", "Attack Vector (AV)"))
         self.avnPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>A vulnerability exploitable with network access means the vulnerable component is bond to the network stack and the attacker\'s path is through OSI layer 3 (the network layer). Such a vulnerability is often termed &quot;remotely exploitable&quot; and can be thought of as an attack being exploitable one or more network hops away (e.g. across layer 3 boundaries from routers). An example of a network attack is an attacker causing a denial of service (DoS) by sending a specially crafted TCP packet from across the public Internet (e.g. CVE-2004-0230).</p></body></html>"))
         self.avnPushButton.setText(_translate("MainWindow", "Network (N)"))
@@ -966,7 +966,7 @@ class Ui_MainWindow(object):
         self.ahPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>There is total loss of availability, resulting in the attacker being able to fully deny access to resources in the impacted component; this loss is either sustained (while the attacker continues to deliver the attack) or persistent (the condition persists even after the attack has completed). Alternatively, the attacker has the ability to deny some availability, but the loss of availability presents a direct, serious consequence to the impacted component (e.g., the attacker cannot disrupt existing connections, but can prevent new connections; the attacker can repeatedly exploit a vulnerability that, in each instance of a successful attack, leaks a only small amount of memory, but after repeated exploitation causes a service to become completely unavailable).</p></body></html>"))
         self.ahPushButton.setText(_translate("MainWindow", "High (H)"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.baseScorePage), _translate("MainWindow", "Base Score"))
-        self.temporalScoreLabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">MISSING METRICS</span></p></body></html>"))
+        self.temporalScoreLabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"right\"><span style=\" font-weight:600;\">MISSING METRICS</span></p></body></html>"))
         self.eGroupBox.setTitle(_translate("MainWindow", "Exploit Code Maturity (E)"))
         self.exPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Assigning this value to the metric will not influence the score. It is a signal to a scoring equation to skip this metric.</p></body></html>"))
         self.exPushButton.setText(_translate("MainWindow", "Not Defined (X)"))
@@ -999,7 +999,7 @@ class Ui_MainWindow(object):
         self.rccPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Detailed reports exist, or functional reproduction is possible (functional exploits may provide this). Source code is available to independently verify the assertions of the research, or the author or vendor of the affected code has confirmed the presence of the vulnerability.</p></body></html>"))
         self.rccPushButton.setText(_translate("MainWindow", "Confirmed (C)"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.temporalScorePage), _translate("MainWindow", "Temporal Score"))
-        self.environmentalScoreLabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">MISSING METRICS</span></p></body></html>"))
+        self.environmentalScoreLabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"right\"><span style=\" font-weight:600;\">MISSING METRICS</span></p></body></html>"))
         self.crGroupBox.setTitle(_translate("MainWindow", "Confidentiality Requirement (CR)"))
         self.crxPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Assigning this value to the metric will not influence the score. It is a signal to the equation to skip this metric.</p></body></html>"))
         self.crxPushButton.setText(_translate("MainWindow", "Not Defined (X)"))
