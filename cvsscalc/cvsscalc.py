@@ -7,6 +7,10 @@ from PyQt5.QtWidgets import *
 from cvss import *
 from mainwindow import Ui_MainWindow
 
+SCORE_TEMPLATE = """
+<html><body><p align="right"><span style="{style} font-weight:600;">
+&nbsp;{score} ({criticity})&nbsp;</span></p></body></html>"""
+
 
 class CVSSCalc(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -39,9 +43,9 @@ class CVSSCalc(QMainWindow, Ui_MainWindow):
         self.MPR = PrivilegeRequiredModified(PrivilegeRequiredModified.NOT_DEFINED)
         self.MUI = UserInteraction(UserInteraction.NOT_DEFINED)
         self.MS = Scope(Scope.NOT_DEFINED)
-        self.MC = CIA(CIA.NONE)
-        self.MI = CIA(CIA.NONE)
-        self.MA = CIA(CIA.NONE)
+        self.MC = None
+        self.MI = None
+        self.MA = None
         self.environmental_score = self.get_environmental_score()
 
         # Base score buttons event handlers
@@ -142,28 +146,137 @@ class CVSSCalc(QMainWindow, Ui_MainWindow):
             lambda: self.update_score(
                 'RC', ReportConfidence(ReportConfidence.CONFIRMED)))
 
+        # Environmental score buttons event handlers
+        self.crxPushButton.clicked.connect(
+            lambda: self.update_score('CR', CIARequirements(CIARequirements.NOT_DEFINED)))
+        self.crlPushButton.clicked.connect(
+            lambda: self.update_score('CR', CIARequirements(CIARequirements.LOW)))
+        self.crmPushButton.clicked.connect(
+            lambda: self.update_score('CR', CIARequirements(CIARequirements.MEDIUM)))
+        self.crhPushButton.clicked.connect(
+            lambda: self.update_score('CR', CIARequirements(CIARequirements.HIGH)))
+
+        self.irxPushButton.clicked.connect(
+            lambda: self.update_score('IR', CIARequirements(CIARequirements.NOT_DEFINED)))
+        self.irlPushButton.clicked.connect(
+            lambda: self.update_score('IR', CIARequirements(CIARequirements.LOW)))
+        self.irmPushButton.clicked.connect(
+            lambda: self.update_score('IR', CIARequirements(CIARequirements.MEDIUM)))
+        self.irhPushButton.clicked.connect(
+            lambda: self.update_score('IR', CIARequirements(CIARequirements.HIGH)))
+
+        self.arxPushButton.clicked.connect(
+            lambda: self.update_score('AR', CIARequirements(CIARequirements.NOT_DEFINED)))
+        self.arlPushButton.clicked.connect(
+            lambda: self.update_score('AR', CIARequirements(CIARequirements.LOW)))
+        self.armPushButton.clicked.connect(
+            lambda: self.update_score('AR', CIARequirements(CIARequirements.MEDIUM)))
+        self.arhPushButton.clicked.connect(
+            lambda: self.update_score('AR', CIARequirements(CIARequirements.HIGH)))
+
+        self.mavxPushButton.clicked.connect(
+            lambda: self.update_score('MAV', AttackVector(AttackVector.NOT_DEFINED)))
+        self.mavnPushButton.clicked.connect(
+            lambda: self.update_score('MAV', AttackVector(AttackVector.NETWORK)))
+        self.mavaPushButton.clicked.connect(
+            lambda: self.update_score('MAV', AttackVector(AttackVector.ADJACENT)))
+        self.mavlPushButton.clicked.connect(
+            lambda: self.update_score('MAV', AttackVector(AttackVector.LOCAL)))
+        self.mavpPushButton.clicked.connect(
+            lambda: self.update_score('MAV', AttackVector(AttackVector.PHYSICAL)))
+
+        self.macxPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MAC', AttackComplexity(AttackComplexity.NOT_DEFINED)))
+        self.maclPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MAC', AttackComplexity(AttackComplexity.LOW)))
+        self.machPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MAC', AttackComplexity(AttackComplexity.HIGH)))
+
+        self.mprxPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MPR', PrivilegeRequiredModified(PrivilegeRequiredModified.NOT_DEFINED)))
+        self.mprnPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MPR', PrivilegeRequiredModified(PrivilegeRequiredModified.NONE)))
+        self.mprlPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MPR', PrivilegeRequiredModified(PrivilegeRequiredModified.LOW)))
+        self.mprhPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MPR', PrivilegeRequiredModified(PrivilegeRequiredModified.HIGH)))
+
+        self.muixPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MUI', UserInteraction(UserInteraction.NOT_DEFINED)))
+        self.muinPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MUI', UserInteraction(UserInteraction.NONE)))
+        self.muirPushButton.clicked.connect(
+            lambda: self.update_score(
+                'MUI', UserInteraction(UserInteraction.REQUIRED)))
+
+        self.msxPushButton.clicked.connect(
+            lambda: self.update_score('MS', Scope.NOT_DEFINED))
+        self.msuPushButton.clicked.connect(
+            lambda: self.update_score('MS', Scope.UNCHANGED))
+        self.mscPushButton.clicked.connect(
+            lambda: self.update_score('MS', Scope.CHANGED))
+
+        self.mcxPushButton.clicked.connect(
+            lambda: self.update_score('MC', CIA(CIA.NOT_DEFINED)))
+        self.mcnPushButton.clicked.connect(
+            lambda: self.update_score('MC', CIA(CIA.NONE)))
+        self.mclPushButton.clicked.connect(
+            lambda: self.update_score('MC', CIA(CIA.LOW)))
+        self.mchPushButton.clicked.connect(
+            lambda: self.update_score('MC', CIA(CIA.HIGH)))
+
+        self.mixPushButton.clicked.connect(
+            lambda: self.update_score('MI', CIA(CIA.NOT_DEFINED)))
+        self.minPushButton.clicked.connect(
+            lambda: self.update_score('MI', CIA(CIA.NONE)))
+        self.milPushButton.clicked.connect(
+            lambda: self.update_score('MI', CIA(CIA.LOW)))
+        self.mihPushButton.clicked.connect(
+            lambda: self.update_score('MI', CIA(CIA.HIGH)))
+
+        self.maxPushButton.clicked.connect(
+            lambda: self.update_score('MA', CIA(CIA.NOT_DEFINED)))
+        self.manPushButton.clicked.connect(
+            lambda: self.update_score('MA', CIA(CIA.NONE)))
+        self.malPushButton.clicked.connect(
+            lambda: self.update_score('MA', CIA(CIA.LOW)))
+        self.mahPushButton.clicked.connect(
+            lambda: self.update_score('MA', CIA(CIA.HIGH)))
+
     def _update_bs(self):
         if self.base_score is not None:
-            txt = """
-                <html><body><p align="center"><span style=" font-weight:600;">
-                {:s}
-                </span></p></body></html>""".format(str(self.base_score))
+            crit, (bg, fg) = criticity(self.base_score)
+            style = 'color: {}; background-color: {};'.format(fg, bg)
+            txt = SCORE_TEMPLATE.format(
+                score=str(self.base_score), criticity=crit, style=style
+            )
             self.baseScoreLabel.setText(txt)
 
     def _update_ts(self):
         if self.temporal_score is not None:
-            txt = """
-                <html><body><p align="center"><span style=" font-weight:600;">
-                {:s}
-                </span></p></body></html>""".format(str(self.temporal_score))
+            crit, (bg, fg) = criticity(self.temporal_score)
+            style = 'color: {}; background-color: {};'.format(fg, bg)
+            txt = SCORE_TEMPLATE.format(
+                score=str(self.temporal_score), criticity=crit, style=style
+            )
             self.temporalScoreLabel.setText(txt)
 
     def _update_es(self):
         if self.environmental_score is not None:
-            txt = """
-                <html><body><p align="center"><span style=" font-weight:600;">
-                {:s}
-                </span></p></body></html>""".format(str(self.environmental_score))
+            crit, (bg, fg) = criticity(self.environmental_score)
+            style = 'color: {}; background-color: {};'.format(fg, bg)
+            txt = SCORE_TEMPLATE.format(
+                score=str(self.environmental_score), criticity=crit, style=style
+            )
             self.environmentalScoreLabel.setText(txt)
 
     def update_score(self, metric: str, value: Metric):
@@ -188,7 +301,7 @@ class CVSSCalc(QMainWindow, Ui_MainWindow):
         return temporal_score(self.base_score, self.E, self.RL, self.RC)
 
     def get_environmental_score(self):
-        if self.S is None:
+        if None in (self.S, self.MC, self.MI, self.MA):
             return None
         miss = modified_impact_subscore(
             self.S, self.MC, self.MI, self.MA, self.CR, self.IR, self.AR
