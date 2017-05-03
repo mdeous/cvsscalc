@@ -17,7 +17,7 @@ cd cvsscalc && ./cvsscalc.py
 
 ### Binary releases
 
-Binary releases are available from the GitHub project (only Linux builds for now).
+Binary [releases](https://github.com/mattoufoutu/cvsscalc/releases) are available from the GitHub project (only Linux builds for now).
 
 ## Licensing
 
