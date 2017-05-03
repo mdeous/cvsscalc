@@ -35,17 +35,17 @@ class CVSSCalc(QMainWindow, Ui_MainWindow):
         self.temporal_score = self.get_temporal_score()
 
         # Environmental score metrics
-        self.CR = CIARequirements(CIARequirements.NOT_DEFINED)
-        self.IR = CIARequirements(CIARequirements.NOT_DEFINED)
-        self.AR = CIARequirements(CIARequirements.NOT_DEFINED)
+        self.CR = None
+        self.IR = None
+        self.AR = None
         self.MAV = AttackVector(AttackVector.NOT_DEFINED)
         self.MAC = AttackComplexity(AttackComplexity.NOT_DEFINED)
         self.MPR = PrivilegeRequiredModified(PrivilegeRequiredModified.NOT_DEFINED)
         self.MUI = UserInteraction(UserInteraction.NOT_DEFINED)
         self.MS = Scope(Scope.NOT_DEFINED)
-        self.MC = None
-        self.MI = None
-        self.MA = None
+        self.MC = CIA(CIA.NOT_DEFINED)
+        self.MI = CIA(CIA.NOT_DEFINED)
+        self.MA = CIA(CIA.NOT_DEFINED)
         self.environmental_score = self.get_environmental_score()
 
         # Base score buttons event handlers
@@ -301,13 +301,22 @@ class CVSSCalc(QMainWindow, Ui_MainWindow):
         return temporal_score(self.base_score, self.E, self.RL, self.RC)
 
     def get_environmental_score(self):
-        if None in (self.S, self.MC, self.MI, self.MA):
+        if None in (self.base_score, self.CR, self.IR, self.AR):
             return None
+        mav = self.AV if self.MAV == AttackVector.NOT_DEFINED else self.MAV
+        mac = self.AC if self.MAC == AttackComplexity.NOT_DEFINED else self.MAC
+        mpr = self.PR if self.MPR == PrivilegeRequiredModified.NOT_DEFINED else self.MPR
+        mui = self.UI if self.MUI == UserInteraction.NOT_DEFINED else self.MUI
+        ms = self.S if self.MS == Scope.NOT_DEFINED else self.MS
+        mc = self.C if self.MC == CIA.NOT_DEFINED else self.MC
+        mi = self.I if self.MI == CIA.NOT_DEFINED else self.MI
+        ma = self.A if self.MA == CIA.NOT_DEFINED else self.MA
+
         miss = modified_impact_subscore(
-            self.S, self.MC, self.MI, self.MA, self.CR, self.IR, self.AR
+            ms, mc, mi, ma, self.CR, self.IR, self.AR
         )
-        mess = modified_exploitability_subscore(self.MAV, self.MAC, self.MPR, self.MUI)
-        return environmental_score(self.S, miss, mess, self.E, self.RL, self.RC)
+        mess = modified_exploitability_subscore(mav, mac, mpr, mui)
+        return environmental_score(ms, miss, mess, self.E, self.RL, self.RC)
 
 
 if __name__ == '__main__':
